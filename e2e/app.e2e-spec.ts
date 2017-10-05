@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('angulartictactoe App', () => {
+describe('Angular TicTacToe App', () => {
   let page: AppPage;
 
   beforeEach(() => {
