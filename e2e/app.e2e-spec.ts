@@ -11,4 +11,8 @@ describe('Angular TicTacToe App', () => {
     page.navigateTo();
     expect(page.getParagraphText()).toEqual('Angular Tic Tac Toe');
   });
+
+  it('should polulate the board with a move', () => {
+    page.navigateTo();
+  })
 });

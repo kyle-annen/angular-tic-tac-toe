@@ -3,10 +3,11 @@ h1, h2, h3, h4, h5, p {
 }
 
 .container {
-  margin-top: 150px;
+  margin-top: 50px;
   width: 458px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 .cell {
@@ -18,8 +19,14 @@ h1, h2, h3, h4, h5, p {
   font-family: "Helvetica Neue", sans-serif;
   text-align: center;
   font-size: 120px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none
 }
-
 
 .ctop {
   border-top: none;
@@ -37,4 +44,50 @@ h1, h2, h3, h4, h5, p {
   border-left: none;
 }
 
+.message {
+  text-align: center;
+}
 
+.hidden {
+  display: none;
+}
+
+.revealed {
+  display: block;
+}
+
+.button {
+  background-color: #263f68;
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #303f80;
+}
+
+@keyframes flickerAnimation { /* flame pulses */
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
+}
+
+.animate-flicker {
+
+}
+
+.computer-thinking {
+  opacity:1;
+  animation: flickerAnimation 3s infinite;
+  width: 458px;
+  position: absolute;
+  font-size: 40px;
+  color: white;
+  padding: 52px 0;
+  text-align: center;
+  top: 230px;
+  background-color: rgba(81, 137, 214, 0.8);
+  margin-left: auto;
+  margin-right: auto;
+}
