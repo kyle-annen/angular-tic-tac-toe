@@ -1,10 +1,14 @@
 language: node_js
 node_js:
-  - '8.4.0'
-
+- 8.4.0
+env:
+  matrix:
+  - secure: u33JoXpKI5aehUR4K+30jaA5THZmQs1qwyid7lm1doh5OuBC25a7PLCiJKFXfP9Xtc+r43wyqHdsPCwDUDsp0fIw+lTkLfDJLrbpKWUeXdNrymBrpc3RJn6U1cVJ5H7hte+BaNKZTYe5I4Bsc3Ze0eje0gImS9mFOnyoeqfkbmYS0E/5nEFNwkQUKcaTdqvkUS+51Z/iwHNCT9RJKakYoLMbIC1kXS/ce+76bd870+eX1l3sJjTgD3pz9JfuB/Ox7pjsmumLmJ6E1KmgfZJjL+TVZKj0u3IJ0sB0dxs2G4hA4YLVXW+dSrsGtlf19Hpvs9+t7WG5JmcGDKQO1OleER3MHuJ9y7D4HOH4D9gn9xUA2LTDmdv9QE0j3t4ihXSjUNNowtG5Wa+V+vWa0EyxKCzrKSlF7MtAKIkowGs/FMc9zjQXtVNHEaIWC+pFlkDNIHIPxFCq42kJYWkLiYy7SLwJ9+HFsBlAZO1AekyNsn2D61iMUWGAoaPx1z4FVdXlAxmy6ENoc/L/+ak20hlSDe9gSCZ6lPMuWtdD2XHpY5b1Yfw4EEcDYSgVgWc6pPipuAmfSxx+rsdTGnnpSAJ5pYAk/AmJpJfzAH4iBlQhBT1E9q1CmFH7WZ7/0qc+ll6D8Pq0+g6/EFblsb+eXcv9plOj148r4X1F0yulfGg0BAk=
 before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
-script: ng test --single-run
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+script:
+- ng test --single-run --code-coverage
+after_script:
+- cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage
