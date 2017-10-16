@@ -14,21 +14,24 @@ export class AppComponent {
   jsonServerUrl: string = 'http://protected-anchorage-62016.herokuapp.com/';
   hideRestartButton: Boolean = true;
   computerThinking: Boolean = false;
+  requestBoard: string;
+  requestMove: string;
+
 
   constructor(private httpClient: HttpClient) {}
 
   cellClicked(n) {
-    const move: string = (n + 1).toString();
-    const boardString: string  = this.board.join(",");
-    let json: object = { 'board': boardString, 'move': move };
+    this.requestMove = (n + 1).toString();
+    this.requestBoard = this.board.join(",");
+    const json = { 'board': this.requestBoard, 'move': this.requestMove };
     this.computerThinking = true;
-    setTimeout(() => { this.sendJson(json)}, 1000);
-
+    this.sendJson(json);
   }
 
   sendJson(json) {
     let requestHeaders: HttpHeaders = new HttpHeaders();
     requestHeaders.append("Content-Type", 'application/json');
+    requestHeaders.append("Access-Control-Allow-Origin", '*');
     const jsonString: string = JSON.stringify(json);
     this.httpClient.post(
       this.jsonServerUrl,
@@ -47,27 +50,24 @@ export class AppComponent {
     const responseKeys: Array<string> = Object.keys(responseJson);
 
     if(responseKeys.includes('board')) {
-      this.board = responseJson.board .split(",");
+      this.board = responseJson.board.split(",");
     }
 
     if(responseKeys.includes('messages')) {
-      this.messages = AppComponent.removeRestartLinkFromMessages(responseJson);
+      this.messages = responseJson.messages;
     }
 
-    if(responseJson.messages.includes("Game Over")) { this.hideRestartButton = false }
+    if(responseJson.messages.includes("Game Over")) {
+      this.hideRestartButton = false;
+    }
 
     this.computerThinking = false;
-  }
-
-  static removeRestartLinkFromMessages(responseJson) {
-    return responseJson.messages.map((x) => {
-      if(x.includes("<a")) { return "" } else { return x }
-    });
   }
 
   resetGame() {
     this.board = ["1","2","3","4","5","6","7","8","9"];
     this.messages = ["Welcome to Tic Tac Toe"];
     this.hideRestartButton = true;
+    this.computerThinking = false;
   }
 }
