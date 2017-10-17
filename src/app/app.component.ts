@@ -11,7 +11,7 @@ export class AppComponent {
   title: string  = 'Angular Tic Tac Toe';
   board: Array<string> = ["1","2","3","4","5","6","7","8","9"];
   messages: Array<string> = ["Welcome to Tic Tac Toe"];
-  jsonServerUrl: string = 'http://protected-anchorage-62016.herokuapp.com/';
+  jsonServerUrl: string = 'https://protected-anchorage-62016.herokuapp.com/';
   hideRestartButton: Boolean = true;
   computerThinking: Boolean = false;
   requestBoard: string;
