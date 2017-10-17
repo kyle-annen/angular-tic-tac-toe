@@ -5,7 +5,7 @@
     <artifactId>angulartictactoe</artifactId>
     <packaging>jar</packaging>
     <description>angulartictactoe</description>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>angulartictactoe</name>
     <organization>
         <name>org.clojars.kyleannen</name>
