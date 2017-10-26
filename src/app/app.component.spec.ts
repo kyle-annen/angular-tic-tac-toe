@@ -187,29 +187,4 @@ describe('AppComponent', () => {
       expect(computerThinkingAfterReset).toEqual(expectedAfterReset);
     });
   });
-
-  describe("cellClicked", () => {
-    it('calls the callback with a JSON indicating the clicked location', () => {
-      const fixture = TestBed.createComponent(AppComponent);
-      fixture.detectChanges();
-      fixture.componentInstance.cellClicked(0)
-      fixture.detectChanges();
-      const expected = "1";
-      const actual = fixture.componentInstance.requestMove;
-      expect(actual).toEqual(expected);
-
-    });
-
-    it('calls the callback with a JSON indicating the current board', () => {
-      const fixture = TestBed.createComponent(AppComponent);
-      fixture.detectChanges();
-
-      fixture.componentInstance.cellClicked(0);
-      fixture.componentInstance.computerThinking = false;  //purely to clean up test window
-      fixture.detectChanges();
-      const expected = "1,2,3,4,5,6,7,8,9";
-      const actual = fixture.componentInstance.requestBoard;
-      expect(actual).toEqual(expected);
-    });
-  });
 });

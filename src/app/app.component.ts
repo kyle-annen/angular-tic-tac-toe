@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { AppService } from "./app.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [AppService]
 })
 
 export class AppComponent {
@@ -14,52 +15,27 @@ export class AppComponent {
   jsonServerUrl: string = 'https://protected-anchorage-62016.herokuapp.com/';
   hideRestartButton: Boolean = true;
   computerThinking: Boolean = false;
-  requestBoard: string;
-  requestMove: string;
 
-
-  constructor(private httpClient: HttpClient) {}
+  constructor(private appService: AppService) {}
 
   cellClicked(n) {
-    this.requestMove = (n + 1).toString();
-    this.requestBoard = this.board.join(",");
-    const json = { 'board': this.requestBoard, 'move': this.requestMove };
+    let requestMove = (n + 1).toString();
+    let requestBoard = this.board.join(",");
+    const json = { 'board': requestBoard, 'move': requestMove };
     this.computerThinking = true;
-    this.sendJson(json);
-  }
-
-  sendJson(json) {
-    let requestHeaders: HttpHeaders = new HttpHeaders();
-    requestHeaders.append("Content-Type", 'application/json');
-    requestHeaders.append("Access-Control-Allow-Origin", '*');
-    const jsonString: string = JSON.stringify(json);
-    this.httpClient.post(
-      this.jsonServerUrl,
-      jsonString,
-      {
-        headers: requestHeaders,
-        responseType: 'json'
-      }
-    ).subscribe(
-      (response: Response) => {
-        this.updateState(response);
-      });
+    this.appService
+      .getTicTacToeData(json, this.jsonServerUrl)
+      .subscribe(json => this.updateState(json))
   }
 
   updateState(responseJson) {
     const responseKeys: Array<string> = Object.keys(responseJson);
 
-    if(responseKeys.includes('board')) {
-      this.board = responseJson.board.split(",");
-    }
+    if(responseKeys.includes('board')) { this.board = responseJson.board.split(","); }
 
-    if(responseKeys.includes('messages')) {
-      this.messages = responseJson.messages;
-    }
+    if(responseKeys.includes('messages')) { this.messages = responseJson.messages; }
 
-    if(responseJson.messages.includes("Game Over")) {
-      this.hideRestartButton = false;
-    }
+    if(responseJson.messages.includes("Game Over")) { this.hideRestartButton = false; }
 
     this.computerThinking = false;
   }
